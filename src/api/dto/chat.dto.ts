@@ -127,3 +127,8 @@ export class BlockUserDto {
   number: string;
   status: 'block' | 'unblock';
 }
+
+export class UpdateContactDto {
+  number: string;
+  displayName: string;
+}
