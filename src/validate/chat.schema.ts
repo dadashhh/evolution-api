@@ -321,7 +321,7 @@ export const updateContactSchema: JSONSchema7 = {
   $id: v4(),
   type: 'object',
   properties: {
-    number: { type: 'string' },
+    number: { type: 'string', pattern: '^[\\d@.:\\s()+-]+$' },
     displayName: { type: 'string', minLength: 1, maxLength: 64 },
   },
   required: ['number', 'displayName'],
