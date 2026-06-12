@@ -3,6 +3,7 @@ import { OfferCallDto } from '@api/dto/call.dto';
 import {
   ArchiveChatDto,
   BlockUserDto,
+  UpdateContactDto,
   DeleteMessage,
   getBase64FromMediaMessageDto,
   LastMessage,
@@ -4126,6 +4127,19 @@ export class BaileysStartupService extends ChannelStartupService {
       return { block: 'success' };
     } catch (error) {
       throw new InternalServerErrorException('Error blocking user', error.toString());
+    }
+  }
+
+  public async updateContact(data: UpdateContactDto) {
+    try {
+      const jid = createJid(data.number);
+      await this.client.addOrEditContact(jid, {
+        fullName: data.displayName,
+        saveOnPrimaryAddressbook: true,
+      } as proto.SyncActionValue.IContactAction);
+      return { update: 'success', jid, displayName: data.displayName };
+    } catch (error) {
+      throw new InternalServerErrorException('updateContact failed', error?.toString());
     }
   }
 

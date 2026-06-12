@@ -2,6 +2,7 @@ import { RouterBroker } from '@api/abstract/abstract.router';
 import {
   ArchiveChatDto,
   BlockUserDto,
+  UpdateContactDto,
   DeleteMessage,
   getBase64FromMediaMessageDto,
   MarkChatUnreadDto,
@@ -22,6 +23,7 @@ import { Contact, Message, MessageUpdate } from '@prisma/client';
 import {
   archiveChatSchema,
   blockUserSchema,
+  updateContactSchema,
   contactValidateSchema,
   deleteMessageSchema,
   markChatUnreadSchema,
@@ -147,6 +149,16 @@ export class ChatRouter extends RouterBroker {
           schema: blockUserSchema,
           ClassRef: BlockUserDto,
           execute: (instance, data) => chatController.blockUser(instance, data),
+        });
+
+        return res.status(HttpStatus.CREATED).json(response);
+      })
+      .post(this.routerPath('updateContact'), ...guards, async (req, res) => {
+        const response = await this.dataValidate<UpdateContactDto>({
+          request: req,
+          schema: updateContactSchema,
+          ClassRef: UpdateContactDto,
+          execute: (instance, data) => chatController.updateContact(instance, data),
         });
 
         return res.status(HttpStatus.CREATED).json(response);

@@ -1,6 +1,7 @@
 import {
   ArchiveChatDto,
   BlockUserDto,
+  UpdateContactDto,
   DeleteMessage,
   getBase64FromMediaMessageDto,
   MarkChatUnreadDto,
@@ -112,5 +113,9 @@ export class ChatController {
 
   public async blockUser({ instanceName }: InstanceDto, data: BlockUserDto) {
     return await this.waMonitor.waInstances[instanceName].blockUser(data);
+  }
+
+  public async updateContact({ instanceName }: InstanceDto, data: UpdateContactDto) {
+    return await this.waMonitor.waInstances[instanceName].updateContact(data);
   }
 }
