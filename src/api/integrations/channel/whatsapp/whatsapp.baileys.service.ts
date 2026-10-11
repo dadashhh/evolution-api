@@ -2984,11 +2984,27 @@ export class BaileysStartupService extends ChannelStartupService {
 
     if (file) mediaData.media = file.buffer.toString('base64');
 
+    // dadash: vue unique. Photo ou vidéo seulement ; tout le reste est refusé
+    // (jamais d'envoi « en clair » à la place d'une vue unique demandée).
+    const viewOnce = data?.viewOnce === true;
+    if (viewOnce && data.mediatype !== 'image' && data.mediatype !== 'video') {
+      throw new BadRequestException('viewOnce: image or video only');
+    }
+
     const generate = await this.prepareMediaMessage(mediaData);
+
+    let content: any = { ...generate.message };
+    if (viewOnce) {
+      const key = data.mediatype === 'image' ? 'imageMessage' : 'videoMessage';
+      if (!content[key]) throw new BadRequestException('viewOnce: media not prepared');
+      content[key] = { ...content[key], viewOnce: true };
+      // sendMessage() relaie tel quel tout message enveloppé dans viewOnceMessage.
+      content = { viewOnceMessage: { message: content } };
+    }
 
     const mediaSent = await this.sendMessageWithTyping(
       data.number,
-      { ...generate.message },
+      content,
       {
         delay: data?.delay,
         presence: 'composing',
