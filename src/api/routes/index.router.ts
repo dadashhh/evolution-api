@@ -198,6 +198,8 @@ router
       status: HttpStatus.OK,
       message: 'Welcome to the Evolution API, it is working!',
       version: packageJson.version,
+      // dadash: capacités lues par le CRM avant d'envoyer (fail-closed si absentes).
+      capabilities: ['send_media_view_once'],
       clientName: databaseConfig.CONNECTION.CLIENT_NAME,
       manager: !serverConfig.DISABLE_MANAGER ? `${req.protocol}://${req.get('host')}/manager` : undefined,
       documentation: `https://doc.evolution-api.com`,

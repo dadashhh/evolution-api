@@ -81,6 +81,8 @@ export class SendMediaDto extends Metadata {
   fileName?: string;
   // url or base64
   media: string;
+  // dadash: photo/vidéo à vue unique (image ou video seulement)
+  viewOnce?: boolean;
 }
 
 export class SendPtvDto extends Metadata {
