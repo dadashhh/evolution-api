@@ -2868,6 +2868,15 @@ export class BaileysStartupService extends ChannelStartupService {
         }
       }
 
+      // dadash : durée fournie par l'appelant (WhatsApp affichait 0:00 sur toutes les vidéos :
+      // Baileys ne la calcule que pour l'audio, et Evolution seulement pour les ptv).
+      if (mediaMessage.mediatype === 'video' && prepareMedia.videoMessage) {
+        const seconds = Math.round(Number(mediaMessage.seconds));
+        if (Number.isFinite(seconds) && seconds > 0) {
+          prepareMedia.videoMessage.seconds = seconds;
+        }
+      }
+
       if (mediaMessage?.fileName) {
         mimetype = mimeTypes.lookup(mediaMessage.fileName).toString();
         if (mimetype === 'application/mp4') {

@@ -24,6 +24,8 @@ export class MediaMessage {
   fileName?: string;
   // url or base64
   media: string;
+  // dadash : durée de la vidéo en secondes (sans elle, WhatsApp affiche 0:00)
+  seconds?: number;
 }
 
 export class StatusMessage {
@@ -81,6 +83,8 @@ export class SendMediaDto extends Metadata {
   fileName?: string;
   // url or base64
   media: string;
+  // dadash : durée de la vidéo en secondes (sans elle, WhatsApp affiche 0:00)
+  seconds?: number;
 }
 
 export class SendPtvDto extends Metadata {

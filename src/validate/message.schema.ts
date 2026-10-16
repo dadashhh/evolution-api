@@ -102,6 +102,7 @@ export const mediaMessageSchema: JSONSchema7 = {
     media: { type: 'string' },
     fileName: { type: 'string' },
     caption: { type: 'string' },
+    seconds: { type: 'number', minimum: 0, description: 'dadash: video duration in seconds' },
     delay: {
       type: 'integer',
       description: 'Enter a value in milliseconds',
